@@ -1,17 +1,21 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useTasks } from '../../hooks/useTasks';
+import { useTask } from '../../hooks/useTask';
 import styles from './TaskDetailsPage.module.css';
 
 export const TaskDetailsPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { taskId } = useParams<{ taskId: string }>();
   const navigate = useNavigate();
-  const { task, loading, error, deleteTask } = useTask(id!);
+  const { task, loading, error, deleteTask } = useTask(taskId!);
 
   const handleDelete = async () => {
     if (window.confirm('Вы уверены, что хотите удалить эту задачу?')) {
-      await deleteTask();
-      navigate('/');
+      try {
+        await deleteTask();
+        navigate('/tasks');
+      } catch (err) {
+        console.error('Ошибка при удалении задачи:', err);
+      }
     }
   };
 
@@ -33,7 +37,7 @@ export const TaskDetailsPage: React.FC = () => {
       inProgress: 'В процессе',
       done: 'Выполнена'
     };
-    return statusMap[status as keyof typeof statusMap];
+    return statusMap[status as keyof typeof statusMap] || status;
   };
 
   const getPriorityText = (priority: string) => {
@@ -42,7 +46,7 @@ export const TaskDetailsPage: React.FC = () => {
       medium: 'Средний',
       high: 'Высокий'
     };
-    return priorityMap[priority as keyof typeof priorityMap];
+    return priorityMap[priority as keyof typeof priorityMap] || priority;
   };
 
   const getPriorityClass = (priority: string) => {
@@ -56,11 +60,11 @@ export const TaskDetailsPage: React.FC = () => {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <Link to="/" className={styles.backButton}>
+        <Link to="/tasks" className={styles.backButton}>
           ← Назад к списку
         </Link>
         <div className={styles.actions}>
-          <Link to={`/task/edit/${task.id}`} className={styles.editButton}>
+          <Link to={`/tasks/edit/${task.id}`} className={styles.editButton}>
             Редактировать
           </Link>
           <button onClick={handleDelete} className={styles.deleteButton}>
@@ -99,11 +103,11 @@ export const TaskDetailsPage: React.FC = () => {
           <p className={styles.description}>{task.description}</p>
         </div>
 
-        {task.tags.length > 0 && (
+        {task.tags && task.tags.length > 0 && (
           <div className={styles.section}>
             <h3>Метки</h3>
             <div className={styles.tags}>
-              {task.tags.map(tag => (
+              {task.tags.map((tag: string) => (
                 <span key={tag} className={styles.tag}>
                   {tag}
                 </span>

@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { ITask, TaskFilters, SortField, SortOrder } from '../../types/task';
-import { TaskList } from '../../components/TaskList';
-import { TaskFilters as Filters } from '../../components/TaskFilters';
+import { TaskFilters, SortField, SortOrder } from '../../types/task';
+import { TaskList } from '../../components/tasks/TaskList';
+import { TaskFilters as Filters } from '../../components/tasks/TaskFilters';
 import { useTasks } from '../../hooks/useTasks';
 import styles from './TaskListPage.module.css';
 
@@ -21,14 +21,14 @@ export const TaskListPage: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
   const filteredAndSortedTasks = useMemo(() => {
-    let filtered = tasks.filter(task => {
+    let filtered = tasks.filter((task) => {
       if (filters.status && filters.status.length > 0 && !filters.status.includes(task.status)) {
         return false;
       }
       if (filters.priority && filters.priority.length > 0 && !filters.priority.includes(task.priority)) {
         return false;
       }
-      if (filters.tags && filters.tags.length > 0 && !filters.tags.some(tag => task.tags.includes(tag))) {
+      if (filters.tags && filters.tags.length > 0 && !filters.tags.some((tag: string) => task.tags.includes(tag))) {
         return false;
       }
       if (filters.search) {
@@ -79,7 +79,7 @@ export const TaskListPage: React.FC = () => {
     <div className={styles.page}>
       <div className={styles.header}>
         <h1>Все задачи</h1>
-        <Link to="/task/new" className={styles.createButton}>
+        <Link to="/tasks/new" className={styles.createButton}>
           Создать задачу
         </Link>
       </div>

@@ -1,56 +1,69 @@
-import { useState, useEffect } from 'react';
-import { taskApi } from '../services/api';
-import { ITask } from '../types';
+// 📁 src/hooks/useTasks.ts
+import { useState, useEffect, useCallback } from 'react';
+import { ITask, TaskFilters, SortField, SortOrder } from '../types/task';
+import { taskApi } from '../services/api/taskApi';
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
+  const loadTasks = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await taskApi.getAll();
-      setTasks(response.data.data || response.data);
-    } catch (err: any) {
-      setError(err.message || 'Ошибка загрузки задач');
+      setError(null);
+      const data = await taskApi.getAll();
+      setTasks(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load tasks');
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const deleteTask = async (taskId: string) => {
+  const createTask = useCallback(async (taskData: Omit<ITask, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const newTask = await taskApi.create(taskData);
+      setTasks(prev => [...prev, newTask]);
+      return newTask;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create task');
+      throw err;
+    }
+  }, []);
+
+  const updateTask = useCallback(async (taskId: string, taskData: Partial<ITask>) => {
+    try {
+      const updatedTask = await taskApi.update(taskId, taskData);
+      setTasks(prev => prev.map(task => task.id === taskId ? updatedTask : task));
+      return updatedTask;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update task');
+      throw err;
+    }
+  }, []);
+
+  const deleteTask = useCallback(async (taskId: string) => {
     try {
       await taskApi.delete(taskId);
       setTasks(prev => prev.filter(task => task.id !== taskId));
-    } catch (err: any) {
-      setError(err.message || 'Ошибка удаления задачи');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete task');
       throw err;
     }
-  };
+  }, []);
 
-  const updateTask = async (taskId: string, updates: Partial<ITask>) => {
-    try {
-      const response = await taskApi.update(taskId, updates);
-      setTasks(prev => prev.map(task => 
-        task.id === taskId ? { ...task, ...response.data } : task
-      ));
-    } catch (err: any) {
-      setError(err.message || 'Ошибка обновления задачи');
-      throw err;
-    }
-  };
+  useEffect(() => {
+    loadTasks();
+  }, [loadTasks]);
 
   return {
     tasks,
     loading,
     error,
-    deleteTask,
+    createTask,
     updateTask,
-    refetch: fetchTasks,
+    deleteTask,
+    refetch: loadTasks,
   };
 };

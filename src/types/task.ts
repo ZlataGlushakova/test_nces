@@ -3,35 +3,28 @@ import { Status, Priority, BaseEntity } from './common';
 export type SortField = 'dueDate' | 'priority' | 'createdAt';
 export type SortOrder = 'asc' | 'desc';
 
-export interface ITask extends BaseEntity {
+export interface ITask {
+  id: string;
   title: string;
   description: string;
-  status: Status;
-  priority: Priority;
-  dueDate: string; // ISO string
-  tags: string[];
-}
-
-export interface CreateTaskDto {
-  title: string;
-  description: string;
-  status: Status;
-  priority: Priority;
+  status: 'todo' | 'inProgress' | 'done';
+  priority: 'low' | 'medium' | 'high';
   dueDate: string;
   tags: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface UpdateTaskDto extends Partial<CreateTaskDto> {}
+export type TaskStatus = 'todo' | 'inProgress' | 'done';
+export type TaskPriority = 'low' | 'medium' | 'high';
 
 export interface TaskFilters {
-  status?: Status[];
-  priority?: Priority[];
+  status?: TaskStatus[];
+  priority?: TaskPriority[];
   tags?: string[];
   search?: string;
 }
 
-export interface TaskSortOptions {
-  field: 'dueDate' | 'priority' | 'createdAt';
-  direction: 'asc' | 'desc';
-}
+export type SortField = 'dueDate' | 'priority' | 'createdAt';
+export type SortOrder = 'asc' | 'desc';
 
