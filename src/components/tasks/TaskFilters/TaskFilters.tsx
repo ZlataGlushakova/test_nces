@@ -6,6 +6,10 @@ interface TaskFiltersProps {
   filters: ITaskFilters;
   onFiltersChange: (filters: ITaskFilters) => void;
   availableTags: string[];
+  sortField?: any; // Добавьте для совместимости
+  sortOrder?: any; // Добавьте для совместимости
+  onSortChange?: any; // Добавьте для совместимости
+  onOrderChange?: any; // Добавьте для совместимости
 }
 
 export const TaskFilters: React.FC<TaskFiltersProps> = ({
@@ -13,10 +17,10 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
   onFiltersChange,
   availableTags,
 }) => {
-  const handleStatusChange = (status: ITaskFilters['status'][0], checked: boolean) => {
+  const handleStatusChange = (status: string, checked: boolean) => {
     const currentStatuses = filters.status || [];
     const newStatuses = checked
-      ? [...currentStatuses, status]
+      ? [...currentStatuses, status as any]
       : currentStatuses.filter(s => s !== status);
     
     onFiltersChange({
@@ -25,10 +29,10 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
     });
   };
 
-  const handlePriorityChange = (priority: ITaskFilters['priority'][0], checked: boolean) => {
+  const handlePriorityChange = (priority: string, checked: boolean) => {
     const currentPriorities = filters.priority || [];
     const newPriorities = checked
-      ? [...currentPriorities, priority]
+      ? [...currentPriorities, priority as any]
       : currentPriorities.filter(p => p !== priority);
     
     onFiltersChange({
@@ -87,7 +91,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.status?.includes(status as any) || false}
-                  onChange={(e) => handleStatusChange(status as any, e.target.checked)}
+                  onChange={(e) => handleStatusChange(status, e.target.checked)}
                   className={styles.checkbox}
                 />
                 <span className={styles.checkboxText}>
@@ -108,7 +112,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = ({
                 <input
                   type="checkbox"
                   checked={filters.priority?.includes(priority as any) || false}
-                  onChange={(e) => handlePriorityChange(priority as any, e.target.checked)}
+                  onChange={(e) => handlePriorityChange(priority, e.target.checked)}
                   className={styles.checkbox}
                 />
                 <span className={styles.checkboxText}>

@@ -1,6 +1,5 @@
-// 📁 src/hooks/useTasks.ts
 import { useState, useEffect, useCallback } from 'react';
-import { ITask, TaskFilters, SortField, SortOrder } from '../types/task';
+import { ITask } from '../types/task';
 import { taskApi } from '../services/api/taskApi';
 
 export const useTasks = () => {
@@ -12,7 +11,7 @@ export const useTasks = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await taskApi.getAll();
+      const data = await taskApi.getTasks();
       setTasks(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load tasks');
@@ -23,7 +22,7 @@ export const useTasks = () => {
 
   const createTask = useCallback(async (taskData: Omit<ITask, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
-      const newTask = await taskApi.create(taskData);
+      const newTask = await taskApi.createTask(taskData);
       setTasks(prev => [...prev, newTask]);
       return newTask;
     } catch (err) {
@@ -34,7 +33,7 @@ export const useTasks = () => {
 
   const updateTask = useCallback(async (taskId: string, taskData: Partial<ITask>) => {
     try {
-      const updatedTask = await taskApi.update(taskId, taskData);
+      const updatedTask = await taskApi.updateTask(taskId, taskData);
       setTasks(prev => prev.map(task => task.id === taskId ? updatedTask : task));
       return updatedTask;
     } catch (err) {
@@ -45,7 +44,7 @@ export const useTasks = () => {
 
   const deleteTask = useCallback(async (taskId: string) => {
     try {
-      await taskApi.delete(taskId);
+      await taskApi.deleteTask(taskId);
       setTasks(prev => prev.filter(task => task.id !== taskId));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete task');

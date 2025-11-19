@@ -1,10 +1,11 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom'; // Добавь этот импорт
 import { Header } from '../Header';
 import { Sidebar } from '../Sidebar';
 import styles from './Layout.module.css';
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode; // Сделай children опциональным
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -14,7 +15,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <div className={styles.container}>
         <Sidebar />
         <main className={styles.main}>
-          {children}
+          {children || <Outlet />} {/* Рендерим children или Outlet */}
         </main>
       </div>
     </div>

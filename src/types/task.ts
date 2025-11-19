@@ -1,7 +1,6 @@
-import { Status, Priority, BaseEntity } from './common';
-
 export type SortField = 'dueDate' | 'priority' | 'createdAt';
 export type SortOrder = 'asc' | 'desc';
+export type SortOption = `${SortField}-${SortOrder}`;
 
 export interface ITask {
   id: string;
@@ -23,8 +22,22 @@ export interface TaskFilters {
   priority?: TaskPriority[];
   tags?: string[];
   search?: string;
+  searchQuery?: string; // Добавьте для обратной совместимости
 }
 
-export type SortField = 'dueDate' | 'priority' | 'createdAt';
-export type SortOrder = 'asc' | 'desc';
+export interface TaskSortOptions {
+  field: SortField;
+  direction: SortOrder;
+}
 
+// DTOs для API
+export interface CreateTaskDto {
+  title: string;
+  description: string;
+  status: TaskStatus;
+  priority: TaskPriority;
+  dueDate: string;
+  tags: string[];
+}
+
+export interface UpdateTaskDto extends Partial<CreateTaskDto> {}

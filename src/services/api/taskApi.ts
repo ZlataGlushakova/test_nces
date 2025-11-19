@@ -67,6 +67,31 @@ export class TaskApi extends BaseApi<ITask, CreateTaskDto, UpdateTaskDto> {
   async searchTasks(query: string) {
     return this.getAll({ search: query });
   }
+
+  // Добавьте методы для совместимости со store
+  async getTasks() {
+    const response = await this.getAll();
+    return response.data.data || response.data;
+  }
+
+  async getTaskById(id: string) {
+    const response = await this.getById(id);
+    return response.data;
+  }
+
+  async createTask(taskData: CreateTaskDto) {
+    const response = await this.create(taskData);
+    return response.data;
+  }
+
+  async updateTask(id: string, taskData: UpdateTaskDto) {
+    const response = await this.update(id, taskData);
+    return response.data;
+  }
+
+  async deleteTask(id: string) {
+    await this.delete(id);
+  }
 }
 
 export const taskApi = new TaskApi();

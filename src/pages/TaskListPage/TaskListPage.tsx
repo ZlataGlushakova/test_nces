@@ -20,7 +20,14 @@ export const TaskListPage: React.FC = () => {
   const [sortField, setSortField] = useState<SortField>('createdAt');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
+  // Получаем уникальные теги из всех задач
+  const availableTags = useMemo(() => {
+    const allTags = tasks.flatMap(task => task.tags || []);
+    return Array.from(new Set(allTags));
+  }, [tasks]);
+
   const filteredAndSortedTasks = useMemo(() => {
+    // ... существующая логика фильтрации и сортировки
     let filtered = tasks.filter((task) => {
       if (filters.status && filters.status.length > 0 && !filters.status.includes(task.status)) {
         return false;
@@ -87,6 +94,7 @@ export const TaskListPage: React.FC = () => {
       <Filters
         filters={filters}
         onFiltersChange={handleFiltersChange}
+        availableTags={availableTags} // Добавлено
         sortField={sortField}
         sortOrder={sortOrder}
         onSortChange={setSortField}
