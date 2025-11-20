@@ -9,6 +9,13 @@ export const useTask = (taskId: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Если taskId пустой, не делаем запрос
+    if (!taskId) {
+      setLoading(false);
+      setError('ID задачи не указан');
+      return;
+    }
+
     const fetchTask = async () => {
       try {
         setLoading(true);
@@ -22,12 +29,8 @@ export const useTask = (taskId: string) => {
       }
     };
 
-    if (taskId) {
-      fetchTask();
-    }
+    fetchTask();
   }, [taskId]);
-
-  
 
   const deleteTask = async () => {
     try {

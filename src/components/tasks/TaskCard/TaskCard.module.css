@@ -19,13 +19,15 @@
   margin-bottom: 12px;
 }
 
-.title {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2d3748;
+.titleLink {
+  text-decoration: none;
+  color: inherit;
   flex: 1;
-  margin-right: 12px;
+}
+
+.titleLink:hover h3 {
+  color: #1976d2;
+  text-decoration: underline;
 }
 
 .description {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ITask } from '../../../types/task';
 import { TaskCard } from '../TaskCard';
 import styles from './TaskList.module.css';
@@ -8,7 +9,7 @@ interface TaskListProps {
   loading: boolean;
   onDeleteTask: (taskId: string) => void;
   onUpdateTask: (taskId: string, taskData: Partial<ITask>) => void;
-  onEditTask: (task: ITask) => void; // Добавить обработчик редактирования
+  onEditTask: (task: ITask) => void;
 }
 
 export const TaskList: React.FC<TaskListProps> = ({ 
@@ -33,13 +34,17 @@ export const TaskList: React.FC<TaskListProps> = ({
   return (
     <div className={styles.taskList}>
       {tasks.map(task => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          onEdit={onEditTask}
-          onDelete={onDeleteTask}
-          onStatusChange={handleStatusChange}
-        />
+        <div key={task.id} className={styles.taskItem}>
+          {/* Добавьте обертку с ссылкой */}
+          <Link to={`/tasks/${task.id}`} className={styles.taskLink}>
+            <TaskCard
+              task={task}
+              onEdit={onEditTask}
+              onDelete={onDeleteTask}
+              onStatusChange={handleStatusChange}
+            />
+          </Link>
+        </div>
       ))}
     </div>
   );

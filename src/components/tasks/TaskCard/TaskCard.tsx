@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ITask } from '../../../types/task';
 import { PriorityBadge } from '../PriorityBadge';
 import styles from './TaskCard.module.css';
@@ -27,9 +28,11 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <h3 className={styles.title}>{task.title}</h3>
-        <PriorityBadge priority={task.priority} />
-      </div>
+  <Link to={`/tasks/${task.id}`} className={styles.titleLink}>
+    <h3 className={styles.title}>{task.title}</h3>
+  </Link>
+  <PriorityBadge priority={task.priority} />
+</div>
       
       <p className={styles.description}>{task.description}</p>
       
@@ -61,6 +64,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       )}
 
       <div className={styles.actions}>
+        
         <button 
           className={styles.editButton}
           onClick={() => onEdit(task)}

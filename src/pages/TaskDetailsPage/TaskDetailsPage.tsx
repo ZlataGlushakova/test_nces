@@ -6,6 +6,11 @@ import styles from './TaskDetailsPage.module.css';
 export const TaskDetailsPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>();
   const navigate = useNavigate();
+
+  if (!taskId) {
+    return <div className={styles.error}>ID задачи не указан</div>;
+  }
+  
   const { task, loading, error, deleteTask } = useTask(taskId!);
 
   const handleDelete = async () => {
@@ -34,6 +39,7 @@ export const TaskDetailsPage: React.FC = () => {
   if (!task) {
     return <div className={styles.error}>Задача не найдена</div>;
   }
+
 
   const getStatusText = (status: string) => {
     const statusMap = {
