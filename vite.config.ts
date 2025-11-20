@@ -14,6 +14,7 @@ export default defineConfig(({ mode }: { mode: string }) => {
     server: {
       port: 3000,
       open: true, // Автоматически открывать браузер
+      historyApiFallback: true,
       proxy: {
         // Прокси для API запросов к json-server
         '/api': {

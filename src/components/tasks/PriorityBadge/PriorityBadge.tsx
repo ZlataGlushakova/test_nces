@@ -10,13 +10,13 @@ export const PriorityBadge: React.FC<PriorityBadgeProps> = ({ priority }) => {
   const getPriorityConfig = (priority: TaskPriority) => {
     switch (priority) {
       case 'high':
-        return { label: 'High', className: styles.high };
+        return { label: 'Высокий', className: styles.high };
       case 'medium':
-        return { label: 'Medium', className: styles.medium };
+        return { label: 'Средний', className: styles.medium };
       case 'low':
-        return { label: 'Low', className: styles.low };
+        return { label: 'Низкий', className: styles.low };
       default:
-        return { label: 'Medium', className: styles.medium };
+        return { label: 'Средний', className: styles.medium };
     }
   };
 

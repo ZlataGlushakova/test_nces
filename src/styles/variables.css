@@ -1,0 +1,161 @@
+/* CSS переменные для тем и цветов */
+:root {
+  /* Основные цвета */
+  --primary-50: #f0f9ff;
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+
+  /* Оттенки серого */
+  --grey-50: #f9fafb;
+  --grey-100: #f3f4f6;
+  --grey-200: #e5e7eb;
+  --grey-300: #d1d5db;
+  --grey-400: #9ca3af;
+  --grey-500: #6b7280;
+  --grey-600: #4b5563;
+  --grey-700: #374151;
+  --grey-800: #1f2937;
+  --grey-900: #111827;
+
+  /* Цвета статусов */
+  --success-50: #f0fdf4;
+  --success-100: #dcfce7;
+  --success-200: #bbf7d0;
+  --success-300: #86efac;
+  --success-400: #4ade80;
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+  --success-700: #15803d;
+  --success-800: #166534;
+  --success-900: #14532d;
+
+  --warning-50: #fffbeb;
+  --warning-100: #fef3c7;
+  --warning-200: #fde68a;
+  --warning-300: #fcd34d;
+  --warning-400: #fbbf24;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning-700: #b45309;
+  --warning-800: #92400e;
+  --warning-900: #78350f;
+
+  --error-50: #fef2f2;
+  --error-100: #fee2e2;
+  --error-200: #fecaca;
+  --error-300: #fca5a5;
+  --error-400: #f87171;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error-700: #b91c1c;
+  --error-800: #991b1b;
+  --error-900: #7f1d1d;
+
+  /* Цвета приоритетов */
+  --priority-low: var(--success-500);
+  --priority-medium: var(--warning-500);
+  --priority-high: var(--error-500);
+
+  /* Цвета статусов задач */
+  --status-todo: var(--grey-400);
+  --status-inProgress: var(--primary-500);
+  --status-done: var(--success-500);
+
+  /* Тема по умолчанию (светлая) */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--grey-50);
+  --bg-tertiary: var(--grey-100);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  --text-primary: var(--grey-900);
+  --text-secondary: var(--grey-600);
+  --text-tertiary: var(--grey-400);
+  --text-inverse: #ffffff;
+
+  --border-color: var(--grey-200);
+  --border-light: var(--grey-100);
+  --border-dark: var(--grey-300);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Размеры и отступы */
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Размеры контейнеров */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+  /* Z-index уровни */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+/* Темная тема */
+[data-theme="dark"] {
+  --bg-primary: var(--grey-900);
+  --bg-secondary: var(--grey-800);
+  --bg-tertiary: var(--grey-700);
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+
+  --text-primary: var(--grey-50);
+  --text-secondary: var(--grey-200);
+  --text-tertiary: var(--grey-300);
+  --text-inverse: var(--grey-900);
+
+  --border-color: var(--grey-700);
+  --border-light: var(--grey-800);
+  --border-dark: var(--grey-600);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Адаптивные breakpoints */
+@media (max-width: 640px) {
+  :root {
+    --container-padding: var(--spacing-md);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  :root {
+    --container-padding: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
+    --container-padding: var(--spacing-xl);
+  }
+}

@@ -1,18 +1,22 @@
 import React from 'react';
 import { ITask } from '../../../types/task';
+import { TaskCard } from '../TaskCard';
 import styles from './TaskList.module.css';
 
 interface TaskListProps {
   tasks: ITask[];
   loading: boolean;
   onDeleteTask: (taskId: string) => void;
-  onUpdateTask?: (taskId: string, taskData: Partial<ITask>) => void; // Сделайте опциональным
+  onUpdateTask: (taskId: string, taskData: Partial<ITask>) => void;
+  onEditTask: (task: ITask) => void; // Добавить обработчик редактирования
 }
 
 export const TaskList: React.FC<TaskListProps> = ({ 
   tasks, 
   loading, 
-  onDeleteTask, 
+  onDeleteTask,
+  onUpdateTask,
+  onEditTask,
 }) => {
   if (loading) {
     return <div className={styles.loading}>Загрузка...</div>;
@@ -22,15 +26,20 @@ export const TaskList: React.FC<TaskListProps> = ({
     return <div className={styles.empty}>Задачи не найдены</div>;
   }
 
+  const handleStatusChange = (taskId: string, status: ITask['status']) => {
+    onUpdateTask(taskId, { status });
+  };
+
   return (
     <div className={styles.taskList}>
       {tasks.map(task => (
-        <div key={task.id} className={styles.taskItem}>
-          <h3>{task.title}</h3>
-          <p>{task.description}</p>
-          <button onClick={() => onDeleteTask(task.id)}>Удалить</button>
-          {/* Добавьте остальную логику отображения */}
-        </div>
+        <TaskCard
+          key={task.id}
+          task={task}
+          onEdit={onEditTask}
+          onDelete={onDeleteTask}
+          onStatusChange={handleStatusChange}
+        />
       ))}
     </div>
   );

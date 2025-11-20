@@ -19,6 +19,10 @@ export const TaskDetailsPage: React.FC = () => {
     }
   };
 
+  const handleEdit = () => {
+    navigate(`/tasks/edit/${taskId}`);
+  };
+
   if (loading) {
     return <div className={styles.loading}>Загрузка...</div>;
   }
@@ -64,9 +68,9 @@ export const TaskDetailsPage: React.FC = () => {
           ← Назад к списку
         </Link>
         <div className={styles.actions}>
-          <Link to={`/tasks/edit/${task.id}`} className={styles.editButton}>
+          <button onClick={handleEdit} className={styles.editButton}>
             Редактировать
-          </Link>
+          </button>
           <button onClick={handleDelete} className={styles.deleteButton}>
             Удалить
           </button>

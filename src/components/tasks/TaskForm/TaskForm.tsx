@@ -30,7 +30,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     e.preventDefault();
     
     if (!formData.title.trim()) {
-      alert('Title is required');
+      alert('Требуется заголовок');
       return;
     }
 
@@ -67,7 +67,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.field}>
-        <label htmlFor="title">Title *</label>
+        <label htmlFor="title">Название *</label>
         <input
           id="title"
           type="text"
@@ -79,7 +79,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description">Описание</label>
         <textarea
           id="description"
           value={formData.description}
@@ -91,36 +91,36 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="status">Status</label>
+          <label htmlFor="status">Статус</label>
           <select
             id="status"
             value={formData.status}
             onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as ITask['status'] }))}
             className={styles.select}
           >
-            <option value="todo">To Do</option>
-            <option value="inProgress">In Progress</option>
-            <option value="done">Done</option>
+            <option value="todo">К выполнению</option>
+            <option value="inProgress">В процессе</option>
+            <option value="done">Выполнено</option>
           </select>
         </div>
 
         <div className={styles.field}>
-          <label htmlFor="priority">Priority</label>
+          <label htmlFor="priority">Приоритет</label>
           <select
             id="priority"
             value={formData.priority}
             onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as ITask['priority'] }))}
             className={styles.select}
           >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="low">Низкий</option>
+            <option value="medium">Средний</option>
+            <option value="high">Высокий</option>
           </select>
         </div>
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="dueDate">Due Date</label>
+        <label htmlFor="dueDate">Дата выполения</label>
         <input
           id="dueDate"
           type="date"
@@ -131,7 +131,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="tags">Tags</label>
+        <label htmlFor="tags">Тэги</label>
         <div className={styles.tagInput}>
           <input
             id="tags"
@@ -140,7 +140,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             onChange={(e) => setNewTag(e.target.value)}
             onKeyPress={handleKeyPress}
             className={styles.input}
-            placeholder="Add a tag..."
+            placeholder="Добавить тэги"
             list="existingTags"
           />
           <button 
@@ -148,7 +148,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
             onClick={handleAddTag}
             className={styles.addTagButton}
           >
-            Add
+            Добавить
           </button>
         </div>
         <datalist id="existingTags">
@@ -175,10 +175,10 @@ export const TaskForm: React.FC<TaskFormProps> = ({
 
       <div className={styles.actions}>
         <button type="button" onClick={onCancel} className={styles.cancelButton}>
-          Cancel
+          Закрыть
         </button>
         <button type="submit" className={styles.submitButton}>
-          {task ? 'Update Task' : 'Create Task'}
+          {task ? 'Обновить задачу' : 'Создать задачу'}
         </button>
       </div>
     </form>

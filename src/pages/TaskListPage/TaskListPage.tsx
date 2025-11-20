@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import { TaskFilters, SortField, SortOrder } from '../../types/task';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
+import { TaskFilters, SortField, SortOrder, ITask } from '../../types/task'; 
 import { TaskList } from '../../components/tasks/TaskList';
 import { TaskFilters as Filters } from '../../components/tasks/TaskFilters';
 import { useTasks } from '../../hooks/useTasks';
@@ -8,11 +8,12 @@ import styles from './TaskListPage.module.css';
 
 export const TaskListPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { tasks, loading, error, deleteTask, updateTask } = useTasks();
   
   const [filters, setFilters] = useState<TaskFilters>({
-    status: searchParams.get('status')?.split(',') as any,
-    priority: searchParams.get('priority')?.split(',') as any,
+    status: searchParams.get('status')?.split(',') as TaskFilters['status'],
+    priority: searchParams.get('priority')?.split(',') as TaskFilters['priority'],
     tags: searchParams.get('tags')?.split(','),
     search: searchParams.get('search') || '',
   });
@@ -27,17 +28,20 @@ export const TaskListPage: React.FC = () => {
   }, [tasks]);
 
   const filteredAndSortedTasks = useMemo(() => {
-    // ... существующая логика фильтрации и сортировки
     let filtered = tasks.filter((task) => {
+      // Фильтрация по статусу
       if (filters.status && filters.status.length > 0 && !filters.status.includes(task.status)) {
         return false;
       }
+      // Фильтрация по приоритету
       if (filters.priority && filters.priority.length > 0 && !filters.priority.includes(task.priority)) {
         return false;
       }
+      // Фильтрация по тегам
       if (filters.tags && filters.tags.length > 0 && !filters.tags.some((tag: string) => task.tags.includes(tag))) {
         return false;
       }
+      // Фильтрация по поиску
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
         return (
@@ -48,6 +52,7 @@ export const TaskListPage: React.FC = () => {
       return true;
     });
 
+    // Сортировка
     filtered.sort((a, b) => {
       let aValue: any = a[sortField];
       let bValue: any = b[sortField];
@@ -64,7 +69,7 @@ export const TaskListPage: React.FC = () => {
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
     });
 
-    return filtered;
+    return filtered; // Возвращаем отфильтрованный и отсортированный массив
   }, [tasks, filters, sortField, sortOrder]);
 
   const handleFiltersChange = (newFilters: TaskFilters) => {
@@ -76,6 +81,10 @@ export const TaskListPage: React.FC = () => {
       }
     });
     setSearchParams(params);
+  };
+
+  const handleEditTask = (task: ITask) => {
+    navigate(`/tasks/edit/${task.id}`);
   };
 
   if (error) {
@@ -94,7 +103,7 @@ export const TaskListPage: React.FC = () => {
       <Filters
         filters={filters}
         onFiltersChange={handleFiltersChange}
-        availableTags={availableTags} // Добавлено
+        availableTags={availableTags}
         sortField={sortField}
         sortOrder={sortOrder}
         onSortChange={setSortField}
@@ -106,6 +115,7 @@ export const TaskListPage: React.FC = () => {
         loading={loading}
         onDeleteTask={deleteTask}
         onUpdateTask={updateTask}
+        onEditTask={handleEditTask}
       />
     </div>
   );

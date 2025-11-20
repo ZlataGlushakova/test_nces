@@ -14,7 +14,7 @@ export const Sidebar: React.FC = () => {
         >
           📝 Все задачи
         </Link>
-        <div className={styles.section}>
+        {/* <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Фильтры</h3>
           <Link to="/?status=todo" className={styles.navItem}>
             ⏳ К выполнению
@@ -25,7 +25,7 @@ export const Sidebar: React.FC = () => {
           <Link to="/?status=done" className={styles.navItem}>
             ✅ Выполненные
           </Link>
-        </div>
+        </div> */}
       </nav>
     </aside>
   );

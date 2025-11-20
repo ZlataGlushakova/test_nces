@@ -6,8 +6,15 @@
   margin-bottom: 20px;
 }
 
-.search {
+.searchRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.search {
+  flex: 1;
 }
 
 .searchInput {
@@ -24,10 +31,26 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.toggleButton {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.toggleButton:hover {
+  background: #2563eb;
+}
+
 .filterGroups {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .filterGroup {
@@ -67,7 +90,6 @@
 }
 
 .clearSection {
-  margin-top: 16px;
   padding-top: 16px;
   border-top: 1px solid #e5e7eb;
   display: flex;

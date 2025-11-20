@@ -35,20 +35,20 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       
       <div className={styles.meta}>
         <div className={styles.status}>
-          <label>Status:</label>
+          <label>Статус:</label>
           <select 
             value={task.status} 
             onChange={handleStatusChange}
             className={styles.statusSelect}
           >
-            <option value="todo">To Do</option>
-            <option value="inProgress">In Progress</option>
-            <option value="done">Done</option>
+            <option value="todo">К выполнению</option>
+            <option value="inProgress">В процессе</option>
+            <option value="done">Выполнено</option>
           </select>
         </div>
         
         <div className={styles.dueDate}>
-          <span>Due: {formatDate(task.dueDate)}</span>
+          <span>Дата выполнения: {formatDate(task.dueDate)}</span>
         </div>
       </div>
 
@@ -65,13 +65,13 @@ export const TaskCard: React.FC<TaskCardProps> = ({
           className={styles.editButton}
           onClick={() => onEdit(task)}
         >
-          Edit
+          Изменить
         </button>
         <button 
           className={styles.deleteButton}
           onClick={() => onDelete(task.id)}
         >
-          Delete
+          Удалить
         </button>
       </div>
     </div>

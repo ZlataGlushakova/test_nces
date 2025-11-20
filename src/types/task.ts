@@ -1,4 +1,5 @@
-export type SortField = 'dueDate' | 'priority' | 'createdAt';
+// types/task.ts
+export type SortField = 'title' | 'status' | 'priority' | 'dueDate' | 'createdAt';
 export type SortOrder = 'asc' | 'desc';
 export type SortOption = `${SortField}-${SortOrder}`;
 
@@ -22,7 +23,6 @@ export interface TaskFilters {
   priority?: TaskPriority[];
   tags?: string[];
   search?: string;
-  searchQuery?: string; // Добавьте для обратной совместимости
 }
 
 export interface TaskSortOptions {
